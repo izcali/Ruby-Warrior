@@ -1,13 +1,9 @@
 require 'pp'
-
 class Player
   @health = nil
-
   vision=[ :stairs, :empty, :wall, :captive, :enemy ]
-
   def scan(spaces)
     sight = {}
-
     spaces.each_with_index { |space, index|
       distance = index.succ
       entity = vision.select { |type|
@@ -20,11 +16,8 @@ class Player
       else
         sight[entity] = [distance]
       end
-
       nearest_entity_key = "nearest_#{entity.to_s}".to_sym
       sight[nearest_entity_key] = distance unless sight[nearest_entity_key]
-
-      # zero based distance could be easy to forget...
       if sight[:view]
         sight[:view] << entity
       else
@@ -37,8 +30,6 @@ class Player
 
   def play_turn(warrior)
     @health = warrior.health unless @health
-   
-
     if warrior.feel.wall?
       warrior.pivot!
     elsif warrior.feel.enemy?
